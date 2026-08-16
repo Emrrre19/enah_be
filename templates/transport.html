@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Transport – ENAH{% endblock %}
+{% block content %}
+
+<section class="container">
+  <div class="transport-template-container">
+    <img src="/static/images/transport_template.jpeg" alt="Transport template" class="transport-template">
+  </div>
+
+  <div class="transport-gallery">
+    {% if photos %}
+      {% for photo_url in photos %}
+      <img src="{{ photo_url }}" alt="Transport voertuig {{ loop.index }}" class="transport-photo">
+      {% endfor %}
+    {% else %}
+      <img src="/static/images/transport1.jpeg" alt="Transport voertuig 1" class="transport-photo">
+      <img src="/static/images/transport2.jpeg" alt="Transport voertuig 2" class="transport-photo">
+    {% endif %}
+  </div>
+
+  {% if contact %}
+  <div class="detail-page" style="margin-top: 40px;">
+    <dl class="info-box">
+      <dt>Adres</dt>
+      <dd>
+        {{ contact.address }}
+        {% if current_user.is_authenticated %}
+        <a class="edit-btn-inline" href="{{ url_for('admin_activity_contact_bewerken', activity_name='transport') }}" title="Adres bewerken">✏️</a>
+        {% endif %}
+      </dd>
+      <dt>Telefoon</dt>
+      <dd>
+        {{ contact.phone }}
+        {% if current_user.is_authenticated %}
+        <a class="edit-btn-inline" href="{{ url_for('admin_activity_contact_bewerken', activity_name='transport') }}" title="Telefoon bewerken">✏️</a>
+        {% endif %}
+      </dd>
+      <dt>E-mail</dt>
+      <dd>
+        {{ contact.email }}
+        {% if current_user.is_authenticated %}
+        <a class="edit-btn-inline" href="{{ url_for('admin_activity_contact_bewerken', activity_name='transport') }}" title="E-mail bewerken">✏️</a>
+        {% endif %}
+      </dd>
+    </dl>
+    <div class="info-box offerte-form">
+      <h3>Offerte aanvragen</h3>
+      <form class="styled-form compact" method="POST" action="{{ url_for('afspraak') }}">
+        <div>
+          <label for="naam">Naam *</label>
+          <input type="text" id="naam" name="naam" required value="{{ form_data.naam if form_data else '' }}">
+        </div>
+        <div>
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" required value="{{ form_data.email if form_data else '' }}">
+        </div>
+        <div>
+          <label for="telefoon">Telefoon</label>
+          <input type="tel" id="telefoon" name="telefoon" value="{{ form_data.telefoon if form_data else '' }}">
+        </div>
+        <div>
+          <label for="bericht">Bericht</label>
+          <textarea id="bericht" name="bericht">{{ form_data.bericht if form_data else '' }}</textarea>
+        </div>
+        <button class="btn" type="submit">Offerte aanvragen</button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}

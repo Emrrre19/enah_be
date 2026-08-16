@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Auto Onderhoud – ENAH{% endblock %}
+{% block content %}
+
+<section class="container">
+  <div class="autoonderhoud-template-container">
+    <img src="/static/images/autoonderhoud_template.jpeg" alt="Auto onderhoud template" class="autoonderhoud-template">
+  </div>
+
+  <h2 class="section-title" style="text-align:left; margin-top:160px;">Afspraak aanvragen</h2>
+  <form class="styled-form" method="POST" action="{{ url_for('afspraak') }}">
+    <div>
+      <label for="naam">Naam *</label>
+      <input type="text" id="naam" name="naam" required value="{{ form_data.naam if form_data else '' }}">
+    </div>
+    <div>
+      <label for="email">E-mail *</label>
+      <input type="email" id="email" name="email" required value="{{ form_data.email if form_data else '' }}">
+    </div>
+    <div>
+      <label for="telefoon">Telefoon</label>
+      <input type="tel" id="telefoon" name="telefoon" value="{{ form_data.telefoon if form_data else '' }}">
+    </div>
+    <div>
+      <label for="bericht">Bericht</label>
+      <textarea id="bericht" name="bericht">{{ form_data.bericht if form_data else '' }}</textarea>
+    </div>
+    <button class="btn" type="submit">Afspraak versturen</button>
+  </form>
+</section>
+
+{% endblock %}
